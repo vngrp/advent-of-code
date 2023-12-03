@@ -1,0 +1,10 @@
+product: jvm/app
+
+dependencies:
+    - io.arrow-kt:arrow-core:1.2.0
+    - io.arrow-kt:arrow-fx-coroutines:1.2.0
+
+settings:
+    kotlin:
+        freeCompilerArgs:
+            - "-Xcontext-receivers"
