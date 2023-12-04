@@ -1,1 +1,1 @@
-fun <K, V> Map<K, V>.mutate(block: (mutableMap: MutableMap<K, V>) -> Map<K, V>): Map<K, V> = toMutableMap().let { block(it) }
+fun <K, V> Map<K, V>.put(index: K, block: Map<K, V>.(currentValue: V?) -> V): Map<K, V> = toMutableMap().apply { put(index, block(get(index))) }

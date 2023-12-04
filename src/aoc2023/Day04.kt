@@ -1,7 +1,7 @@
 package aoc2023
 
 import Day
-import mutate
+import put
 import java.io.File
 
 fun main() = Day4().solve(13, 30)
@@ -28,18 +28,12 @@ class Day4 : Day<List<Card>>(4, 2023) {
     
     override fun part2(input: List<Card>) = input
         .foldIndexed(input.indices.associateWith { 1 }) { cardIndex, acc, card ->
-            acc.mutate { updateCopies(card, cardIndex, it) }
+            card
+                .winningNumbers()
+                .foldIndexed(acc) { winningNumberIndex, copies, _  ->
+                    copies.put(cardIndex + winningNumberIndex + 1) { (it ?: 0) + getOrDefault(cardIndex, 0) }
+                }
         }.values.sum()
-
-    private fun updateCopies(card: Card, cardIndex: Int, cardMap: MutableMap<Int, Int>) = card
-        .winningNumbers()
-        .forEachIndexed { winningNumberIndex, _ ->
-            val updateIndex = cardIndex + winningNumberIndex + 1
-            val updatedValue = cardMap.getOrDefault(updateIndex, 0) + cardMap.getOrDefault(cardIndex, 0)
-
-            cardMap[updateIndex] = updatedValue
-        }
-        .let { cardMap }
 
     private fun Card.winningNumbers() = first.intersect(second)
 }
