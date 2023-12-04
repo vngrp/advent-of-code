@@ -4,9 +4,9 @@ import Day
 import put
 import java.io.File
 
-fun main() = Day4().solve(13, 30)
+fun main() = Day4.solve(13, 30)
 
-class Day4 : Day<List<List<Int>>>(4, 2023) {
+object Day4 : Day<List<List<Int>>>(4, 2023) {
     override fun parse(file: File) = file
         .readLines()
         .map { line ->
@@ -22,9 +22,9 @@ class Day4 : Day<List<List<Int>>>(4, 2023) {
     }
     
     override fun part2(input: List<List<Int>>) = input
-        .foldIndexed(input.indices.associateWith { 1 }) { cardIndex, acc, winningNumbers ->
-            winningNumbers.foldIndexed(acc) { winningNumberIndex, copies, _  ->
-                copies.put(cardIndex + winningNumberIndex + 1) { it + getValue(cardIndex) }
+        .foldIndexed(input.indices.associateWith { 1 }) { cardIndex, acc, won ->
+            won.foldIndexed(acc) { index, copies, _  ->
+                copies.put(cardIndex + index + 1) { it + getValue(cardIndex) }
             }
         }.values.sum()
 }

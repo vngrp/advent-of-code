@@ -4,9 +4,9 @@ import Day
 import regexGroups
 import java.io.File
 
-fun main() = Day2().solve(8, 2286)
+fun main() = Day2.solve(8, 2286)
 
-class Day2: Day<List<Game>>(2, 2023) {
+object Day2: Day<List<Game>>(2, 2023) {
     override fun parse(file: File) = file
         .readLines()
         .mapIndexed { index, line ->

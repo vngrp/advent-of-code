@@ -4,9 +4,9 @@ import Day
 import arrow.core.fold
 import java.io.File
 
-fun main() = Day1().solve(8, 2286)
+fun main() = Day1.solve(8, 2286)
 
-class Day1 : Day<List<String>>(1, 2023) {
+object Day1 : Day<List<String>>(1, 2023) {
     override fun parse(file: File) = file.readLines()
     
     override fun part1(input: List<String>) = input

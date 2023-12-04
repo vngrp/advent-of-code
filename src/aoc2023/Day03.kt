@@ -6,9 +6,9 @@ import getAdjacents
 import grab
 import java.io.File
 
-fun main() = Day3().solve(4361, 467835)
+fun main() = Day3.solve(4361, 467835)
 
-class Day3: Day<File>(3, 2023) {
+object Day3: Day<File>(3, 2023) {
     override fun parse(file: File) = file
     override fun part2(input: File) = input
         .readLines()
