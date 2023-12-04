@@ -1,4 +1,5 @@
 import java.io.File
+import kotlin.system.measureTimeMillis
 
 abstract class Day<T>(val day: Int, val year: Int) {
     abstract fun parse(file: File): T
@@ -13,7 +14,7 @@ abstract class Day<T>(val day: Int, val year: Int) {
     private fun process(part: (input: T) -> Number, example: Number) = with(part) {
         try {
             calculate(exampleInput) validate example
-            calculate(actualInput) then answer()
+            measureTimeMillis { calculate(actualInput) then answer() }.also { println(" (⏳ $it ms)") }
         }
         catch (e: NotImplementedError) { e.printNotImplemented() }
         catch (e: IncorrectAlgorithmError) { e.printIncorrectAlgorithm() }

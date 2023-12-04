@@ -1,4 +1,5 @@
 import java.io.File
+import kotlin.system.measureTimeMillis
 
 /**
  * Code style functions to prettify the day template
@@ -22,7 +23,7 @@ context(Day<T>, (T) -> Number)
 fun <T> IncorrectAlgorithmError.printIncorrectAlgorithm() = println("🚧 Year $year - Day $day.$part is incorrect. Expected $expected, got $actual")
 
 infix fun <T> T.then(block: (input: T) -> Answer) = block(this).also { (year, day, part, result) ->
- println("✅  Year $year - Day $day.$part answer: $result")
+ print("✅  Year $year - Day $day.$part: $result")
 }
 
 context(Day<T>)
