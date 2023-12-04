@@ -10,9 +10,10 @@ class Day4 : Day<List<List<Int>>>(4, 2023) {
     override fun parse(file: File) = file
         .readLines()
         .map { line ->
-            val (_, winning, owned) = line.split(":", "|")
+            val winning = line.substringAfter(": ").substringBefore("|").split(" ").toSet()
+            val owned = line.substringAfter("|").split(" ").toSet()
 
-            winning.split(" ").intersect(owned.split(" ").toSet()).mapNotNull { it.toIntOrNull() }
+            winning.intersect(owned).mapNotNull { it.toIntOrNull() }
         }
 
     override fun part1(input: List<List<Int>>) = input.sumOf {
@@ -23,7 +24,7 @@ class Day4 : Day<List<List<Int>>>(4, 2023) {
     override fun part2(input: List<List<Int>>) = input
         .foldIndexed(input.indices.associateWith { 1 }) { cardIndex, acc, winningNumbers ->
             winningNumbers.foldIndexed(acc) { winningNumberIndex, copies, _  ->
-                copies.put(cardIndex + winningNumberIndex + 1) { (it ?: 0) + getOrDefault(cardIndex, 0) }
+                copies.put(cardIndex + winningNumberIndex + 1) { it + getValue(cardIndex) }
             }
         }.values.sum()
 }
