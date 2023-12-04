@@ -16,10 +16,10 @@ val <T> ((T) -> Number).part
     get() = this::class.java.name.last().let { Character.getNumericValue(it) }
 
 context(Day<T>, (T) -> Number)
-fun <T> NotImplementedError.printNotImplemented() = println("👨‍💻 Year $year - Day $day.$part is not yet implemented")
+fun <T> NotImplementedError.printNotImplemented() = println("💻 Year $year - Day $day.$part is not yet implemented")
 
 context(Day<T>, (T) -> Number)
-fun <T> IncorrectAlgorithmError.printIncorrectAlgorithm() = println("🚧 Year $year - Day $day.$part algorithm is incorrect")
+fun <T> IncorrectAlgorithmError.printIncorrectAlgorithm() = println("🚧 Year $year - Day $day.$part is incorrect. Expected $expected, got $actual")
 
 infix fun <T> T.then(block: (input: T) -> Answer) = block(this).also { (year, day, part, result) ->
  println("✅  Year $year - Day $day.$part answer: $result")
