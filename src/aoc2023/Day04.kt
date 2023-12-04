@@ -22,8 +22,8 @@ object Day4 : Day<List<List<Int>>>(4, 2023) {
     }
     
     override fun part2(input: List<List<Int>>) = input
-        .foldIndexed(input.indices.associateWith { 1 }) { cardIndex, acc, won ->
-            won.foldIndexed(acc) { index, copies, _  ->
+        .foldIndexed(input.indices.associateWith { 1 }) { cardIndex, acc, winningNumbers ->
+            winningNumbers.foldIndexed(acc) { index, copies, _  ->
                 copies.put(cardIndex + index + 1) { it + getValue(cardIndex) }
             }
         }.values.sum()
