@@ -46,16 +46,24 @@ object Day5 : Day<Almanac>(5, 2023) {
         }
     
     private fun AlmanacMap.findSeedRangeDelta(seed: Long) = entries.find { seed in it.key }?.value ?: 0 
+//    private fun AlmanacMap.findLowestSeedRangeDelta(seed: Long, rangeLength: Long) = entries.minOf { entry ->
+//        if (entry.value < 0) {
+//            // I think we need to find the lowest resulting number in each AlmanacMap range, so for every map
+//            // Then intersect them with the seeds you have and only process those
+//        }
+//    }
     
     override fun part2(input: Almanac) = input
         .seeds
         .windowed(2, 2)
         .flatMap { (rangeStart, rangeLength) -> (rangeStart..<rangeStart+rangeLength) }
-        .minOf { seed ->
+        .minOf { 
             input
                 .almanacMaps
-                .fold(seed) { acc, almanacMap ->
-                    acc + almanacMap.findSeedRangeDelta(acc)
-                }
+//                .fold(seedRange) { acc, almanacMap ->
+//                    val seed = seed + almanacMap.findSeedRangeDelta(seed, rangeLength)
+//                }
+
+            5
         }
 }
