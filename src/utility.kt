@@ -23,7 +23,7 @@ context(Day<T>, (T) -> Number)
 fun <T> IncorrectAlgorithmError.printIncorrectAlgorithm() = println("🚧 Year $year - Day $day.$part is incorrect. Expected $expected, got $actual")
 
 infix fun <T> T.then(block: (input: T) -> Answer) = block(this).also { (year, day, part, result) ->
- print("✅  Year $year - Day $day.$part: $result")
+ print("✅  Year $year, Day $day.$part: $result")
 }
 
 context(Day<T>)
