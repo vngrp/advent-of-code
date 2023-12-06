@@ -1,15 +1,17 @@
 package aoc2023
 
 import Day
+import mapLinesIndexed
 import regexGroups
 import java.io.File
 
 fun main() = Day2.solve(8, 2286)
 
-object Day2: Day<List<Game>>(2, 2023) {
+typealias Games = List<Game>
+
+object Day2: Day<Games>(2, 2023) {
     override fun parse(file: File) = file
-        .readLines()
-        .mapIndexed { index, line ->
+        .mapLinesIndexed { index, line ->
             line
                 .substringAfter(": ")
                 .split(";")
@@ -24,7 +26,7 @@ object Day2: Day<List<Game>>(2, 2023) {
                 .let { Game(index + 1, it) }
         }
 
-    override fun part1(input: List<Game>) = input
+    override fun part1(input: Games) = input
         .filter { game ->
             game.canBePlayedWith(listOf(
                 CubeSet(12, Color.RED),
@@ -34,7 +36,7 @@ object Day2: Day<List<Game>>(2, 2023) {
         }
         .sumOf { it.id }
 
-    override fun part2(input: List<Game>) = input
+    override fun part2(input: Games) = input
         .sumOf { game ->
             game
                 .drawings

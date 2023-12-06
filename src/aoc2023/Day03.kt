@@ -4,6 +4,8 @@ import Day
 import INCLUDE_DIAGONAL
 import getAdjacents
 import grab
+import readChars
+import readLine
 import java.io.File
 
 fun main() = Day3.solve(4361, 467835)
@@ -28,11 +30,10 @@ object Day3: Day<File>(3, 2023) {
         .map { (number, points) ->
             number to points.flatMap { point ->
                 file
-                    .readLines()
-                    .flatMap { it.toList() }
+                    .readChars()
                     .getAdjacents(
                         point,
-                        boundary = file.readLines().first().length,
+                        boundary = file.readLine().length,
                         INCLUDE_DIAGONAL
                     )
             }
