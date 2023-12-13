@@ -4,21 +4,22 @@ import Day
 import readGroups
 import readLine
 import java.io.File
+import kotlinx.coroutines.runBlocking
 
 data class Almanac(val seeds: List<Long>, val maps: List<AlmanacMap>)
 typealias AlmanacMap = Map<LongRange, LongRange>
 
-fun main() = Day5.solve(35, 46)
+fun main() = runBlocking { Day5.solve(35, 46) }
 
 object Day5 : Day<Almanac>(5, 2023) {
-    override fun parse(file: File): Almanac {
-        val seeds = file
+    override fun parse(input: File): Almanac {
+        val seeds = input
             .readLine()
             .substringAfter(": ")
             .split(" ")
             .map { it.toLong() }
         
-        val maps = file
+        val maps = input
             .readGroups(String::isNotEmpty)
             .drop(1)
             .map { map ->
@@ -34,7 +35,7 @@ object Day5 : Day<Almanac>(5, 2023) {
         return Almanac(seeds, maps)
     }
 
-    override fun part1(input: Almanac) = input
+    override suspend fun part1(input: Almanac) = input
         .seeds
         .minOf { seed ->
             input
@@ -47,7 +48,7 @@ object Day5 : Day<Almanac>(5, 2023) {
     private fun Map<LongRange, LongRange>.findSeedRangeDelta(seed: Long) =
         entries.find { seed in it.key }?.delta() ?: 0
 
-    override fun part2(input: Almanac): Number {
+    override suspend fun part2(input: Almanac): Number {
         val lowestLocation = input.maps.last().minBy { it.value.first }
         val range = input.maps
             .dropLast(1)

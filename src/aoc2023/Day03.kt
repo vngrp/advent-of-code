@@ -7,18 +7,19 @@ import grab
 import readChars
 import readLine
 import java.io.File
+import kotlinx.coroutines.runBlocking
 
-fun main() = Day3.solve(4361, 467835)
+fun main() = runBlocking { Day3.solve(4361, 467835) }
 
 object Day3: Day<File>(3, 2023) {
-    override fun parse(file: File) = file
-    override fun part2(input: File) = input
+    override fun parse(input: File) = input
+    override suspend fun part2(input: File) = input
         .readLines()
         .grabWithAdjacents(input, "(\\*)")
         .onEach { println(it) }
         .let { 5 }
 
-    override fun part1(input: File) = input
+    override suspend fun part1(input: File) = input
         .readLines()
         .grabWithAdjacents(input, "(\\d+)")
         .filter { it.second.any { char -> char.isSymbol() } }

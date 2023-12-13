@@ -8,15 +8,17 @@ import product
 import second
 import thickMap
 import java.io.File
-
-fun main() = Day6.solve(288, 71503)
+import kotlinx.coroutines.runBlocking
 
 typealias Races = List<List<Long>>
 
-object Day6 : Day<Races>(6, 2023) {
-    override fun parse(file: File) = file.mapLines { it.grabLongs() }
-    override fun part1(input: Races) = input.first().zip(input.second(), ::countWins).product()
-    override fun part2(input: Races) = input.thickMap { it.joinToLong() }.let(::part1)
+fun main() = runBlocking {
+    object : Day<Races>(6, 2023) {
+        override fun parse(input: File) = input.mapLines { it.grabLongs() }
+        override suspend fun part1(input: Races) = input.first().zip(input.second(), ::countWins).product()
+        override suspend fun part2(input: Races) = input.thickMap { it.joinToLong() }.let { part1(it) }
 
-    private fun countWins(time: Long, distance: Long) = (1 ..< time).count { it.times(time - it) > distance }
+        private fun countWins(time: Long, distance: Long) = (1..<time).count { it.times(time - it) > distance }
+    }
+        .solve(288, 71503)
 }

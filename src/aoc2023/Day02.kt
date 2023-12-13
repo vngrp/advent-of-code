@@ -4,13 +4,14 @@ import Day
 import mapLinesIndexed
 import regexGroups
 import java.io.File
+import kotlinx.coroutines.runBlocking
 
-fun main() = Day2.solve(8, 2286)
+fun main() = runBlocking { Day2.solve(8, 2286) }
 
 typealias Games = List<Game>
 
 object Day2: Day<Games>(2, 2023) {
-    override fun parse(file: File) = file
+    override fun parse(input: File) = input
         .mapLinesIndexed { index, line ->
             line
                 .substringAfter(": ")
@@ -26,7 +27,7 @@ object Day2: Day<Games>(2, 2023) {
                 .let { Game(index + 1, it) }
         }
 
-    override fun part1(input: Games) = input
+    override suspend fun part1(input: Games) = input
         .filter { game ->
             game.canBePlayedWith(listOf(
                 CubeSet(12, Color.RED),
@@ -36,7 +37,7 @@ object Day2: Day<Games>(2, 2023) {
         }
         .sumOf { it.id }
 
-    override fun part2(input: Games) = input
+    override suspend fun part2(input: Games) = input
         .sumOf { game ->
             game
                 .drawings

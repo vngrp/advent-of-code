@@ -6,15 +6,16 @@ import firstValid
 import joinToInt
 import lastValid
 import java.io.File
+import kotlinx.coroutines.runBlocking
 
-fun main() = Day1.solve(8, 2286)
+fun main() = runBlocking { Day1.solve(8, 2286) }
 
 typealias Calibrations = List<String>
 
 object Day1 : Day<Calibrations>(1, 2023) {
-    override fun parse(file: File) = file.readLines()
+    override fun parse(input: File) = input.readLines()
     
-    override fun part1(input: Calibrations) = input
+    override suspend fun part1(input: Calibrations) = input
         .sumOf {
             listOf(
                 it.firstValid(Char::isDigit),
@@ -23,10 +24,10 @@ object Day1 : Day<Calibrations>(1, 2023) {
                 .joinToInt()
         }
     
-    override fun part2(input: Calibrations) =
+    override suspend fun part2(input: Calibrations) =
         input
             .map(::replaceWords)
-            .let(::part1)
+            .let { part1(input) }
 
     private fun replaceWords(line: String): String {
         val words = mapOf(

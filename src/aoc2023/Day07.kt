@@ -1,16 +1,63 @@
 package aoc2023
 
 import Day
+import mapLines
+import print
 import java.io.File
+import kotlinx.coroutines.runBlocking
 
-fun main() = object : Day<Input>(7, 2023) {
-    override fun parse(file: File) = TODO()
-    override fun part1(input: Input) = TODO()
-    override fun part2(input: Input) = TODO()
+typealias PokerHands = List<Pair<Hand, Bid>>
+typealias Bid = Int
+typealias Hand = Map<Char, Int>
+
+enum class Type(val strength: Int) {
+    HighCard(0),
+    OnePair(1),
+    TwoPair(2),
+    ThreeOfAKind(3),
+    FullHouse(4),
+    FourOfAKind(5),
+    FiveOfAKind(6)
 }
-    .solve(-1, -1)
 
-typealias Input = List<String>
+fun main() = runBlocking {
+    object : Day<PokerHands>(7, 2023) {
+        override fun parse(input: File) = input
+            .mapLines { line ->
+                val (cards, bid) = line.split(" ")
+
+                cards.groupingBy { it }.eachCount() to bid.toInt()
+            }
+
+        override suspend fun part1(input: PokerHands) = input
+            .map { showHandStrength(it.first) }
+            .sortedBy { TODO() }
+            .print
+            .let { 5 }
+
+        override suspend fun part2(input: PokerHands) = TODO()
+    }
+        .solve(6440, -1)
+}
+
+fun showHandStrength(hand: Hand) {
+
+}
+
+val Hand.type
+    get() = when {
+        5 in values -> Type.FiveOfAKind
+        4 in values -> Type.FourOfAKind
+        3 in values && 2 in values  -> Type.FullHouse
+        3 in values -> Type.ThreeOfAKind
+        2 in values && 2 in (values - 2) -> Type.TwoPair
+        2 in values -> Type.OnePair
+        else -> Type.HighCard
+    }
+
+/**
+ * Train an AI model on the belastingdienst!
+ */
 
 /**
  * At some point I should try to get in the top 100, by:
